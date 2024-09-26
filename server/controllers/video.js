@@ -92,7 +92,7 @@ try{
         path:isOwns.path
     }
     await producer.publishMessage(routingKey,msg,req.userId);
-    //consuming teh reply message
+    //consuming the reply message
     const reply = await producer.consumeReply(req.userId);
     if(reply.success){
         const newVideo = await Video.create(reply.videoData);

@@ -1,9 +1,9 @@
 const express = require('express');
-require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('./config/morgan');
 const path = require('path');
+const appConfig = require('./config/app.config');
 
 
 
@@ -48,9 +48,9 @@ app.use((error,req,res,next)=>{
 
 async function initialize(){
     try{
-        await mongoose.connect(process.env.MONGODB_URL);
+        await mongoose.connect(appConfig.database.url);
         console.log('Connected to Database.')
-        app.listen(process.env.PORT,()=>{
+        app.listen(appConfig.port,()=>{
             console.log('Server is running.')
         })
     }

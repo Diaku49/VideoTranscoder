@@ -1,9 +1,6 @@
 const {createClient} = require('redis');
 const AppError = require('../../util/AppError');
-const redisPass = process.env.REDIS_PASS;
-const redisHost = process.env.REDIS_HOST;
-const redisPort = parseInt(process.env.REDIS_PORT,10);
-
+const appConfig = require('../config/app.config');
 
 class RedisClient {
     client
@@ -15,10 +12,10 @@ class RedisClient {
 
     _initializeClient() {
         const client = createClient({
-            password: redisPass,
+            password: appConfig.redis.password,
             socket: {
-                host: redisHost,
-                port: redisPort
+                host: appConfig.redis.host,
+                port: appConfig.redis.port
             }
         });
         // Handling error

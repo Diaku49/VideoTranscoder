@@ -3,7 +3,7 @@ const AppError = require('../../util/AppError');
 const exchangeName = process.env.EXCHANGE;
 
 class Producer {
-    channel
+    channel;
 
     async initialize(){
         const rabbit = await amqp.connect(process.env.RABBITURL);

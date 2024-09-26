@@ -6,6 +6,7 @@ const { isValid } = require("../../util/isValid");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const redis = require('../Redis/redis');
+const appConfig = require('../config/app.config');
 
 
 exports.googleCallback = (req,res,next)=>{
@@ -76,9 +77,12 @@ try{
         throw new AppError('Wrong password.',422)
     };
     const token = jwt.sign({
-        id:user._id,
-        role:user.role
-    },process.env.JWT_SECRET,{expiresIn:'0.5h'});
+            id:user._id,
+            role:user.role
+        },
+        appConfig.jwtSecret,
+        {expiresIn:'0.5h'}
+    );
     res.status(201).json({
         token:token,
         message:'Logged in successfully.'
@@ -108,7 +112,7 @@ try{
     const token = jwt.sign({
         id:userId,
         role:user.role
-    },process.env.JWT_SECRET,{expiresIn:'0.5h'});
+    },appConfig.jwtSecret,{expiresIn:'0.5h'});
 
     res.status(201).json({
         token:token,

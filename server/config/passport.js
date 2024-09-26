@@ -3,11 +3,12 @@ const GoogleStrategy = require('passport-google-oauth20');
 const createOAuthJWT = require('../Auth/createOAuthJwt');
 const redis = require('../Redis/redis');
 const AppError = require('../../util/AppError');
+const appConfig = require('./app.config');
 
 passport.use(new GoogleStrategy({
-    clientID:process.env.CLIENT_ID,
-    clientSecret:process.env.CLIENT_SERCRET,
-    callbackURL:process.env.CALLBACKURL
+    clientID:appConfig.googleOAuth.clientId,
+    clientSecret:appConfig.googleOAuth.clientSecret,
+    callbackURL:appConfig.googleOAuth.callbackUrl
 },
 async function(accessToken,refreshToken,profile,email,cb){
     try{
